@@ -15,4 +15,4 @@ license-file: LICENSE.markdown
 maintainer: Taylor Fausak
 name: bento
 synopsis: ! "\U0001F371 Manage stateful components."
-version: '0.0.0'
+version: '0.1.0'
