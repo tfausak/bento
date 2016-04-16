@@ -1,0 +1,25 @@
+addons:
+  apt:
+    packages:
+    - libgmp-dev
+after_success:
+- mkdir -p ~/.stack/upload
+- echo "{\"username\":\"$HACKAGE_USERNAME\",\"password\":\"$HACKAGE_PASSWORD\"}" >
+  ~/.stack/upload/credentials.json
+- if test $TRAVIS_TAG; then stack upload .; fi
+before_install:
+- mkdir -p ~/.local/bin
+- export PATH=~/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 > stack.tar.gz
+- tar -x -f stack.tar.gz -C ~/.local/bin --strip-components 1 --wildcards '*/stack'
+cache:
+  directories:
+  - ~/.stack
+env:
+  global:
+  - HACKAGE_USERNAME=fozworth
+  - secure: JJggUBZl3tRbTv4Kx21dXCj/CbvPMuiSKKsVuPsoKcJCXjbyvKWf7GIAUDE4dn3m8kzXwY8NCUYBcTS+V6WAdeQ0gyEfss7/0MlynpgnZz/JTWZc1vj21y8l0rajgmSTp3ctemzh0kchIRUVF3VC9pb0hsfnQa7Bck3rEVeCJfEBudIiL6KbqGFKl9jvQeOFt7viNgM/4hfR6hqWCk9/JzdLaG3pOepN55tZ1PHYaFQ+RSWCL2PvsotjaM4eET3H9zFnMFD1vKREwy3B7Q6nAln7gELwaLXSKniVEyi/sWwXnnmZ9El9GbLsM7yd/XSiFmiKUCptgmSTfumpGAdqkelU+VkmYxrc7vixwx7LUVsrHBBBqtijbxCU7RP7iX9peBa6jtz6QdMLKX7I8A9CekrwLkOiMY1cEd77SHVFkyUiPTudc+6ll6wx9AvbJlyVtBe8SOmLbyqBZaE/IdrTjwT2+ItChXBvw2qyF9OCRmbKdU7neq9g0MGHfTs4v4ovyjPylMd3nVH2NoUi8FRPupkUHt2z8sxWvxs9jCYbaA4ZIbykGay3QNVC2l/mQ55b3mTmrVawT4TPJ41qDGm36Enopy4Xg6jZZBaF/PslXAYm8FXurLJGVlF4lqmafGB4UcqC61+ku2HnWjp2juDN/W79mzRJ1aE0VSdObt3lfk8=
+script:
+- stack --no-terminal build --pedantic
+- stack sdist
+sudo: false

@@ -1,0 +1,18 @@
+category: Utility
+description: Bento manages stateful components.
+extra-source-files:
+- CHANGELOG.markdown
+- package.yaml
+- README.markdown
+- stack.yaml
+ghc-options: -Wall
+github: tfausak/bento
+library:
+  dependencies: base >=4 && <5
+  source-dirs: library
+license: MIT
+license-file: LICENSE.markdown
+maintainer: Taylor Fausak
+name: bento
+synopsis: ! "\U0001F371 Manage stateful components."
+version: '0.0.0'
